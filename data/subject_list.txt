@@ -1,0 +1,6 @@
+/home/project/data/subject001_denoised_func_data.nii.gz
+/home/project/data/subject002_denoised_func_data.nii.gz
+/home/project/data/subject003_denoised_func_data.nii.gz
+/home/project/data/subject004_denoised_func_data.nii.gz
+/home/project/data/subject005_denoised_func_data.nii.gz
+/home/project/data/subject006_denoised_func_data.nii.gz
