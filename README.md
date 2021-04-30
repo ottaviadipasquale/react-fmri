@@ -200,7 +200,7 @@ brain under MDMA", Neuroimage, Volume 195, 2019, Pages 252-260, ISSN 1053-8119,
 https://doi.org/10.1016/j.neuroimage.2019.04.007.
 
 * **Github Repository**: Ottavia Dipasquale and Matteo Frigo, "REACT-fMRI Python 
-package", 2021, https://github.com/ottaviadipasquale/react-fmri/
+package", 2021, https://github.com/ottaviadipasquale/react-fmri/,
 [DOI:10.5281/zenodo.4730559](https://zenodo.org/badge/latestdoi/362894234).
 
 
