@@ -21,20 +21,21 @@ setup(
         'Programming Language :: Python :: 3',
         'Topic :: Scientific/Engineering :: Medical Science Apps.',
     ],
-    description='A Python package that implements REACT: Receptor-enriched '
-                'analysis of ...',
+    description='A Python package that implements REACT: Receptor-Enriched '
+                'Analysis of Functional Connectivity by Targets',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    install_requires=['nibabel', 'numpy', 'scikit-learn', 'scipy'],
+    install_requires=['nibabel>=3.0.0', 'numpy', 'scikit-learn>=0.22', 'scipy'],
     name='react-fmri',
     packages=['react'],
     python_requires='>=3',
-    scripts=['script/react', 'script/react_mask'],
+    scripts=['script/react', 'script/react_masks', 'script/react_normalize'],
     url='',
     version=version,
     project_urls={
-        'Source': '',
-        'Bug Reports': '',
-        'Documentation': '',
+        'Source': 'https://github.com/ottaviadipasquale/react-fmri',
+        'Bug Reports': 'https://github.com/ottaviadipasquale/react-fmri/issues',
+        'Documentation': 'https://github.com/ottaviadipasquale/react-fmri/'
+                         'blob/main/README.md',
     },
 )

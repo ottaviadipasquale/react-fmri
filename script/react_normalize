@@ -1,0 +1,94 @@
+#!/usr/bin/env python
+import argparse
+import logging
+import os
+
+import nibabel as nib
+import numpy as np
+
+from react.utils import check_can_write_file, normalize_3d_volume
+
+DESCRIPTION = """
+Normalize each PET image to get it in the [0,1] range.
+The performed operation for each image is `output = (input - min(input)) / 
+(max(input) - min(input))` where zero-valued voxels are ignored. The reference 
+region must be removed beforehand. 
+"""
+PROG = 'react_scale'
+EPILOG = 'REFERENCE: https://doi.org/10.1038/s41386-020-0724-x - ' \
+         'Dipasquale, O., Martins, D., Sethi, A., Veronese, M., Hesse, S., ' \
+         'Rullmann, M., Sabri, O., Turkheimer, F., Harrison, N.A., Mehta, ' \
+         'M.A. and Cercignani, M., 2020. Unravelling the effects of ' \
+         'methylphenidate on the dopaminergic and noradrenergic functional ' \
+         'circuits. Neuropsychopharmacology, 45(9), pp.1482-1489.'
+
+
+def get_parsed_args():
+    parser = argparse.ArgumentParser(prog=PROG, epilog=EPILOG,
+                                     description=DESCRIPTION)
+
+    parser.add_argument(
+        'in_image',
+        type=str,
+        help='Image to normalize in .nii/.nii.gz format. '
+             'E.g., `home/study/data/image.nii.gz` .'
+    )
+
+    parser.add_argument(
+        'out_image',
+        type=str,
+        help='Path where the normalize image will be saved. '
+             'E.g., `/home/study/REACT/image_rescaled.nii.gz` .'
+    )
+
+    parser.add_argument(
+        '--force',
+        action='store_true',
+        help="If set, allows to overwrite existing files."
+    )
+
+    parser.add_argument(
+        '-v', '--verbose',
+        action='store_true',
+        help='Set verbose output.'
+    )
+
+    return parser.parse_args()
+
+
+def main():
+    args = get_parsed_args()
+
+    if args.verbose:
+        logging.getLogger().setLevel(logging.INFO)
+    else:
+        logging.getLogger().setLevel(logging.WARNING)
+
+    if args.force:
+        logging.warning('Overwriting existing files')
+
+    if not os.path.isfile(args.in_image):
+        raise FileNotFoundError(f'Input file does not exist: {args.in_image}')
+
+    check_can_write_file(args.out_image, args.force)
+
+    volume = nib.load(args.in_image)
+    data = volume.get_fdata(dtype=np.float32)
+
+    if data.ndim == 3:
+        logging.info('Input is a 3-dimensional volume.')
+        rescaled = normalize_3d_volume(data)
+    elif data.ndim == 4:
+        logging.info('Input is a 4-dimensional volume.')
+        rescaled = np.zeros_like(data)
+        for i in range(data.shape[3]):
+            logging.info(f'Processing volume # {i} of {data.shape[3] - 1}')
+            rescaled[..., i] = normalize_3d_volume(data[..., i])
+    else:
+        raise ValueError('Number of dimensions of input data must be 3 or 4.')
+
+    nib.save(nib.Nifti1Image(rescaled, affine=volume.affine), args.out_image)
+
+
+if __name__ == '__main__':
+    main()

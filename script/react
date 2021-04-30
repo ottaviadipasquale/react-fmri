@@ -109,6 +109,9 @@ def main():
     else:
         logging.getLogger().setLevel(logging.WARNING)
 
+    if args.force:
+        logging.warning('Overwriting existing files')
+
     fpath_fmri = args.in_fmri
     fpath_pet = args.pet_atlas
     fpath_mask_stage1 = args.mask_stage1

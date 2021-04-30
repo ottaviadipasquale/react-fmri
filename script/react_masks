@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import argparse
+import logging
 import os
 from os import path
 
@@ -48,15 +49,14 @@ def get_parsed_args():
     parser.add_argument(
         'gm_mask',
         type=str,
-        help='Grey matter mask for thresholding. '  # TODO
+        help='Grey matter mask. '
              'E.g., `/home/study/data/GMmask.nii.gz` .'
-
     )
 
     parser.add_argument(
         'out_masks',
         type=str,
-        help='Folder where the output masks will be saved. '
+        help='Directory where the output masks will be saved. '
              'E.g., `/home/study/REACT/` .'
     )
 
@@ -71,6 +71,14 @@ def get_parsed_args():
 
 def main():
     args = get_parsed_args()
+
+    if args.verbose:
+        logging.getLogger().setLevel(logging.INFO)
+    else:
+        logging.getLogger().setLevel(logging.WARNING)
+
+    if args.force:
+        logging.warning('Overwriting existing files')
 
     if not os.path.exists(args.out_masks):
         os.makedirs(args.out_masks)

@@ -1,8 +1,9 @@
+import logging
 import os
 
 import numpy as np
 
-__all__ = ['check_can_write_file', 'volume4d_to_matrix']
+__all__ = ['check_can_write_file', 'normalize_3d_volume', 'volume4d_to_matrix']
 
 
 def check_can_write_file(fpath: str, force: bool = False,
@@ -57,13 +58,60 @@ def check_can_write_file(fpath: str, force: bool = False,
             raise FileNotFoundError(f'Directory does not exist: {d}')
 
 
+def normalize_3d_volume(v: np.ndarray):
+    """
+    Normalize the positive values of a 3-dimensional numpy array.
+
+    This function shifts the minimum value to zero and rescales the resulting
+    values by the span between the minimum and maximum in the array.
+
+    Note:
+        The processing clips the values of the input image to the [0, +infty)
+        interval.
+
+    Args:
+        v: np.ndarray
+            three-dimensional array to be normalized
+
+    Returns:
+        the normalized version of the input three-dimensional np.ndarray.
+
+    Raises:
+        ValueError : if the input volume is not three-dimensional.
+    """
+    if v.ndim != 3:
+        raise ValueError('Input data must be 3-dimensional')
+    data = v.copy()
+    zeromask = data <= 0
+    data[zeromask] = 0.
+    a = np.min(data[np.logical_not(zeromask)])
+    b = np.max(data[np.logical_not(zeromask)])
+    logging.info(f'Minimum: {a}')
+    logging.info(f'Maximum: {b}')
+    data = data - a  # shift
+    data = data / (b - a)  # scale
+    data[zeromask] = 0.
+    return data
+
+
 def volume4d_to_matrix(v: np.ndarray):
     """
-        For fMRI, where time is the 4th dimension, it gives a matrix with
+        This function transforms a 4-dimensional volume in a matrix whose
+        columns are the vectorization of the 4th dimension of the input array.
+
+        For fMRI data, where time is the 4th dimension, it gives a matrix with
         a row per voxel and a column per time point.
+
+        Args:
+            v: np.ndarray
+                four-dimensional array to be transformed into a matrix.
+
+        Returns:
+            the matrix version of the input volume.
+
+        Raises:
+            ValueError : if the input volume is not 4-dimensional.
     """
-    if not isinstance(v, np.ndarray):
-        v = np.asarray(v)
     if v.ndim != 4:
         raise ValueError('The passed volume must be 4 dimensional.')
     return np.reshape(v, (np.prod(v.shape[:-1]), v.shape[-1]))
