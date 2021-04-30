@@ -2,6 +2,8 @@
 
 [![DOI](https://zenodo.org/badge/362894234.svg)](https://zenodo.org/badge/latestdoi/362894234)
 
+![Graphical abstract](https://user-images.githubusercontent.com/79755700/116727558-a0c38700-a9dc-11eb-8ecc-28b3446b9d11.jpg)
+
 The `react-fmri` software package allows to estimate target-enriched functional 
 connectivity maps from functional MRI data using Positron Emission Tomography 
 (PET) templates as spatial priors of the density distribution of 
