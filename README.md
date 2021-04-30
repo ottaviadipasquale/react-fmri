@@ -46,7 +46,7 @@ react_normalize original_pet_atlas.nii.gz pet_atlas.nii.gz
     for the quantification of the PET data should be masked out from the 
     respective PET volume. An example is the 
     [pet_atlas.nii.gz](https://github.com/ottaviadipasquale/react-fmri/blob/main/data/pet_atlas.nii.gz) 
-    file provided in the `examples` directory, where the cerebellum was masked 
+    file provided in the `data` directory, where the cerebellum was masked 
     out as it was used as reference region. All values < 0 will be set at 0. 
 * Output: 
 The command will normalize each PET atlas included in the original_pet_atlas.nii.gz
@@ -68,18 +68,18 @@ resolution):
     data are to be used for the creation of the masks. Typically, it includes 
     all the subjects of the dataset. An example is the 
     [subject_list.txt](https://github.com/ottaviadipasquale/react-fmri/blob/main/data/subject_list.txt) 
-    file provided in the `examples` directory.
+    file provided in the `data` directory.
     - `pet_atlas.nii.gz` is a 3D or 4D volume including one or more PET 
     atlases to be used for the estimation of the target-enriched functional 
     maps. Of note, the regions used as reference regions in the kinetic model 
     for the quantification of the PET data should be masked out from the 
     respective PET volume. An example is the 
     [pet_atlas.nii.gz](https://github.com/ottaviadipasquale/react-fmri/blob/main/data/pet_atlas.nii.gz) 
-    file provided in the `examples` directory, where the cerebellum was masked 
+    file provided in the `data` directory, where the cerebellum was masked 
     out as it was used as reference region.
     - `gm_mask.nii.gz` is a grey matter mask. A grey matter image, 
     [gm_mask.nii.gz](https://github.com/ottaviadipasquale/react-fmri/blob/main/data/gm_mask.nii.gz), 
-    is provided in the `examples` directory and can be used as input in this 
+    is provided in the `data` directory and can be used as input in this 
     command. It was estimated by thesholding the probabilistic grey matter image 
     provided by FSL at the intensity value of 77 in order to retain all voxels 
     with a probability of at least 30% of being grey matter. The resulting 
@@ -118,7 +118,7 @@ resolution):
     for the quantification of the PET data should be masked out from the 
     respective PET volume. An example is the 
     [pet_atlas.nii.gz](https://github.com/ottaviadipasquale/react-fmri/blob/main/data/pet_atlas.nii.gz) 
-    file provided in the `examples` directory, where the cerebellum was masked 
+    file provided in the `data` directory, where the cerebellum was masked 
     out as it was used as reference region. We recommend to rescale each PET 
     image in the [0,1] range after removing the reference region. This step can 
     be done using the `react_normalize` command.
