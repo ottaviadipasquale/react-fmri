@@ -57,6 +57,7 @@ the span between the minimum and the maximum values of the image. Then, it will
 generate:
     - `pet_atlas.nii.gz`: normalised version of  `original_pet_atlas.nii.gz`. 
     The order of the PET atlases is the same as the one in the original file.
+The optional argument -v will output the min and max values for each PET map.
 
 ### To create the masks: `react_masks`
 
