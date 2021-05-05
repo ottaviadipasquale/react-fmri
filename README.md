@@ -11,7 +11,7 @@ neurotransmitters in the brain.
 
 This software is coded in pure Python, its code is available on 
 [Github](https://github.com/ottaviadipasquale/react-fmri), it can be installed 
-via [Pypi]()
+via [Pypi](https://pypi.org/project/react-fmri/)
 and it is released under 
 [MIT License](https://github.com/ottaviadipasquale/react-fmri/blob/main/LICENSE).
 
