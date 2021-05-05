@@ -30,7 +30,7 @@ setup(
     packages=['react'],
     python_requires='>=3',
     scripts=['script/react', 'script/react_masks', 'script/react_normalize'],
-    url='',
+    url='https://github.com/ottaviadipasquale/react-fmri/',
     version=version,
     project_urls={
         'Source': 'https://github.com/ottaviadipasquale/react-fmri',
