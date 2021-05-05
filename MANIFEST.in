@@ -1,0 +1,2 @@
+include data/gm_mask.nii.gz
+include data/pet_atlas.nii.gz

@@ -146,8 +146,8 @@ generate:
 
 ## Requirements
 * python3
-* numpy
-* scipy
+* numpy >= 1.15
+* scipy >= 0.19.1
 * nibabel >= 3.0.0
 * scikit-learn >= 0.22
 
@@ -165,7 +165,6 @@ install REACT without interfering with other local software.
 ```shell script
 conda create -n react-fmri python=3
 conda activate react-fmri
-pip install -r requirements.txt
 pip install react-fmri
 ```
 Then you will need to activate the `react-fmri` environment for using REACT.

@@ -1,9 +1,9 @@
-from setuptools import setup
+from glob import glob
 
+from setuptools import setup
 
 with open('README.md', 'r') as f:
     long_description = f.read()
-
 
 # Read the version from the main package.
 with open('react/__init__.py') as f:
@@ -12,24 +12,35 @@ with open('react/__init__.py') as f:
             _, version, _ = line.split("'")
             break
 
+# Read the requirements from the file
+requirements = []
+with open('requirements.txt', 'r') as f:
+    for line in f:
+        if line[0] == '#':
+            continue
+        requirements.append(line.rstrip('\n'))
 
 setup(
     author='Ottavia Dipasquale, Matteo Frigo',
     classifiers=[
+        'Intended Audience :: Healthcare Industry',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
+        'Development Status :: 4 - Beta',
+        'Topic :: Scientific/Engineering :: Image Processing',
         'Topic :: Scientific/Engineering :: Medical Science Apps.',
     ],
     description='A Python package that implements REACT: Receptor-Enriched '
                 'Analysis of Functional Connectivity by Targets',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    install_requires=['nibabel>=3.0.0', 'numpy', 'scikit-learn>=0.22', 'scipy'],
+    include_package_data=True,
+    install_requires=requirements,
     name='react-fmri',
     packages=['react'],
     python_requires='>=3',
-    scripts=['script/react', 'script/react_masks', 'script/react_normalize'],
+    scripts=glob('script/*'),
     url='https://github.com/ottaviadipasquale/react-fmri/',
     version=version,
     project_urls={

@@ -1,4 +1,6 @@
-numpy
-scipy
+# This file is read by the setup.py script to determine the dependencies to
+# install.
+numpy>=1.15
+scipy>=0.19.1
 nibabel>=3.0.0
 scikit-learn>=0.22
