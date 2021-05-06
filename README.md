@@ -175,7 +175,7 @@ react ...
 ```
 
 ## Getting help
-For help requests and bug reporting we prefer to use the 
+For help requests and bug reporting please use the 
 [Github issues](https://github.com/ottaviadipasquale/react-fmri/issues/new) 
 system.
 
@@ -191,13 +191,32 @@ fsl_glm -i subject001_fmri.nii.gz -d REACT/subject001_stage1.txt -o REACT/subjec
 ```
 
 ## How to cite REACT
-* **Primary Reference**: Ottavia Dipasquale, Pierluigi Selvaggi, Mattia Veronese, 
-Anthony S.Gabay, Federico Turkheimer, Mitul A. Mehta, "Receptor-Enriched 
+* **Primary Reference**: O. Dipasquale, P. Selvaggi, M. Veronese, 
+A.S. Gabay, F. Turkheimer, M.A. Mehta, "Receptor-Enriched 
 Analysis of functional connectivity by targets (REACT): A novel, multimodal 
 analytical approach informed by PET to study the pharmacodynamic response of the 
-brain under MDMA", Neuroimage, Volume 195, 2019, Pages 252-260, ISSN 1053-8119, 
+brain under MDMA", Neuroimage 2019, 195, 252-260, 
 https://doi.org/10.1016/j.neuroimage.2019.04.007.
 
+* **Other References**:
+    * O. Dipasquale, D. Martins, A. Sethi, M. Veronese, S. Hesse, M. Rullmann, 
+    O. Sabri, F. Turkheimer, N.A. Harrison, M.A. Mehta, M. Cercignani, "Unravelling
+    the effects of methylphenidate on the dopaminergic and noradrenergic functional 
+    circuits", Neuropsychopharmacology 2020, 45 (9), 1482-1489,
+    https://doi.org/10.1038/s41386-020-0724-x
+    
+    * M. Cercignani, O. Dipasquale, I. Bogdan, T. Carandini, J. Scott, W. Rashid, 
+    O. Sabri, S. Hesse, M. Rullmann, L. Lopiano, M. Veronese, D. Martins, M. Bozzali,
+    "Cognitive fatigue in multiple sclerosis is associated with alterations in the 
+    functional connectivity of monoamine circuits", Brain Communications 2021, 
+    3 (2), fcab023, https://doi.org/10.1093/braincomms/fcab023
+    
+    * D. Martins, M. Veronese, F.E. Turkheimer, M.A. Howard, S.C.R. Williams, 
+    O. Dipasquale, "A candidate neuroimaging biomarker for detection of 
+    neurotransmission-related functional alterations and prediction of 
+    pharmacological analgesic response in chronic pain", BioRxiv, 
+    https://doi.org/10.1101/2021.02.17.431572
+    
 * **Github Repository**: Ottavia Dipasquale and Matteo Frigo, "REACT-fMRI Python 
 package", 2021, https://github.com/ottaviadipasquale/react-fmri/,
 [DOI:10.5281/zenodo.4730559](https://zenodo.org/badge/latestdoi/362894234).
