@@ -14,7 +14,7 @@ The performed operation for each image is `output = (input - min(input)) /
 (max(input) - min(input))` where zero-valued voxels are ignored. The reference 
 region must be removed beforehand. 
 """
-PROG = 'react_scale'
+PROG = 'react_normalize'
 EPILOG = 'REFERENCE: https://doi.org/10.1038/s41386-020-0724-x - ' \
          'Dipasquale, O., Martins, D., Sethi, A., Veronese, M., Hesse, S., ' \
          'Rullmann, M., Sabri, O., Turkheimer, F., Harrison, N.A., Mehta, ' \
