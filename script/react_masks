@@ -72,14 +72,6 @@ def get_parsed_args():
 def main():
     args = get_parsed_args()
 
-    if args.verbose:
-        logging.getLogger().setLevel(logging.INFO)
-    else:
-        logging.getLogger().setLevel(logging.WARNING)
-
-    if args.force:
-        logging.warning('Overwriting existing files')
-
     if not os.path.exists(args.out_masks):
         os.makedirs(args.out_masks)
 
