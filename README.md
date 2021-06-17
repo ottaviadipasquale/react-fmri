@@ -139,10 +139,6 @@ generate:
         - `subject001_react_stage2_IC0.nii.gz`
         - `subject001_react_stage2_IC1.nii.gz`
         - `subject001_react_stage2_IC2.nii.gz`
-    - `REACT/subject001_react_stage2_Z.nii.gz`: if the optional argument 
-    `--out_z` is specified, the Fisher z-transformation will be applied to the 
-    `REACT/subject001_react_stage2.nii.gz` functional connectivity maps, 
-    producing a 4D file named `REACT/subject001_react_stage2_Z.nii.gz`
 
 ## Requirements
 * python3
