@@ -8,16 +8,16 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 
+import react
 from react.utils import check_can_write_file, volume4d_to_matrix
 
 OUT_REACT_STAGE1 = '_react_stage1.txt'
 OUT_REACT_STAGE2 = '_react_stage2.nii.gz'
 OUT_REACT_STAGE2_IC = '_react_stage2_IC'
-OUT_REACT_STAGE2_Z = '_react_stage2_z.nii.gz'
 
-DESCRIPTION = """
-Receptor-Enriched Analysis of Functional Connectivity by Targets. All files 
-must be in the same space.
+DESCRIPTION = f"""
+v{react.__version__} Receptor-Enriched Analysis of Functional Connectivity by Targets.
+All files must be in the same space.
 """
 PROG = 'react'
 EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
@@ -30,7 +30,7 @@ EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(prog=PROG, epilog=EPILOG,
-                                     description=DESCRIPTION)
+        description=DESCRIPTION)
 
     parser.add_argument(
         'in_fmri',
@@ -80,12 +80,6 @@ def get_parsed_args():
     )
 
     parser.add_argument(
-        '--out_z',
-        action='store_true',
-        help='If set, saves the Z-stats as `<out_react>_react_stage2_z.nii.gz`.'
-    )
-
-    parser.add_argument(
         '--data_norm',
         action='store_true',
         help='If set, normalizes the input data of stage 2 to unit standard '
@@ -129,10 +123,6 @@ def main():
 
     fpath_result_stage2 = os.path.abspath(args.out_react) + OUT_REACT_STAGE2
     check_can_write_file(fpath_result_stage2, args.force, args.verbose)
-
-    fpath_result_z = os.path.abspath(args.out_react) + OUT_REACT_STAGE2_Z
-    if args.out_z:
-        check_can_write_file(fpath_result_z, args.force, args.verbose)
 
     volume_fmri = nib.load(fpath_fmri)
     n_times = volume_fmri.shape[-1]
@@ -210,19 +200,13 @@ def main():
     beta2 = np.reshape(beta2, volume_pet.shape)
 
     nib.save(nib.Nifti1Image(beta2, affine=volume_pet.affine),
-             fpath_result_stage2)
+        fpath_result_stage2)
     logging.info(f'Saved result stage 2 in {fpath_result_stage1}')
 
     for i, f in enumerate(fpath_ic):
         nib.save(nib.Nifti1Image(np.squeeze(beta2[..., i]),
-                                 affine=volume_pet.affine), f)
+            affine=volume_pet.affine), f)
         logging.info(f'Saved result IC{i} of stage 2 in {f}')
-
-    if args.out_z:
-        z = np.arctanh(beta2)
-        nib.save(nib.Nifti1Image(z, affine=volume_pet.affine),
-                 fpath_result_z)
-        logging.info(f'Saved Z score in {fpath_result_stage1}')
 
 
 if __name__ == '__main__':

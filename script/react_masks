@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 import argparse
-import logging
 import os
 from os import path
 
 import nibabel as nib
 import numpy as np
 
+import react
 from react.utils import check_can_write_file
 
 OUT_MASK_STAGE_1 = 'mask_stage1.nii.gz'
 OUT_MASK_STAGE_2 = 'mask_stage2.nii.gz'
 
-DESCRIPTION = """
+DESCRIPTION = f"""
+v{react.__version__}
 Receptor-Enriched Analysis of Functional Connectivity by Targets. All files 
 must be in the same space.
 """
@@ -27,7 +28,7 @@ EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(prog=PROG, epilog=EPILOG,
-                                     description=DESCRIPTION)
+        description=DESCRIPTION)
 
     parser.add_argument(
         'subject_list',
@@ -97,7 +98,7 @@ def main():
 
     fout = path.join(args.out_masks, OUT_MASK_STAGE_2)
     nib.save(nib.Nifti1Image(mask_st2.astype(np.int8), affine=volume.affine),
-             fout)
+        fout)
 
     volume = nib.load(args.pet_atlas)
     data = np.sum(volume.get_fdata() > 0, axis=-1) == volume.shape[-1]
@@ -107,7 +108,7 @@ def main():
 
     fout = path.join(args.out_masks, OUT_MASK_STAGE_1)
     nib.save(nib.Nifti1Image(mask_st1.astype(np.int8), affine=volume.affine),
-             fout)
+        fout)
 
 
 if __name__ == '__main__':
