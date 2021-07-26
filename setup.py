@@ -22,6 +22,8 @@ with open('requirements.txt', 'r') as f:
 
 setup(
     author='Ottavia Dipasquale, Matteo Frigo',
+    author_email='ottavia.dipasquale@kcl.ac.uk',
+    license='MIT',
     classifiers=[
         'Intended Audience :: Healthcare Industry',
         'Intended Audience :: Science/Research',
