@@ -28,7 +28,7 @@ EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(prog=PROG, epilog=EPILOG,
-        description=DESCRIPTION)
+                                     description=DESCRIPTION)
 
     parser.add_argument(
         'subject_list',
@@ -41,7 +41,7 @@ def get_parsed_args():
     parser.add_argument(
         'pet_atlas',
         type=str,
-        help='4D file containing the PET atlases '
+        help='3D or 4D file containing the PET atlases '
              'to be used in the REACT analysis. '
              'E.g., `/home/study/data/PETatlas.nii.gz` .'
 
@@ -80,7 +80,8 @@ def main():
         check_can_write_file(path.join(args.out_masks, f), args.force)
 
     with open(args.subject_list, 'rt') as f:
-        sublist = [fp.rstrip('\n') for fp in f.readlines()]
+        # it skips empty lines
+        sublist = [l.rstrip('\n') for l in list(filter(str.rstrip, f))]
 
     volume = nib.load(sublist[0])
     data = np.zeros(volume.shape[:3])
@@ -98,17 +99,21 @@ def main():
 
     fout = path.join(args.out_masks, OUT_MASK_STAGE_2)
     nib.save(nib.Nifti1Image(mask_st2.astype(np.int8), affine=volume.affine),
-        fout)
+             fout)
 
     volume = nib.load(args.pet_atlas)
-    data = np.sum(volume.get_fdata() > 0, axis=-1) == volume.shape[-1]
+    affine = volume.affine.copy()
+    volume = volume.get_fdata()
+    if volume.ndim == 3:
+        volume = volume[..., np.newaxis]
+    data = np.sum(volume > 0, axis=3) == volume.shape[3]
     if not np.all(mask_st2.shape == data.shape):
         raise ValueError('Shape of input volume is incompatible.')
     mask_st1 = np.logical_and(mask_st2, data > 0)
 
     fout = path.join(args.out_masks, OUT_MASK_STAGE_1)
-    nib.save(nib.Nifti1Image(mask_st1.astype(np.int8), affine=volume.affine),
-        fout)
+    nib.save(nib.Nifti1Image(mask_st1.astype(np.int8), affine=affine),
+             fout)
 
 
 if __name__ == '__main__':

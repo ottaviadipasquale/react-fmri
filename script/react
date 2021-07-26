@@ -16,8 +16,8 @@ OUT_REACT_STAGE2 = '_react_stage2.nii.gz'
 OUT_REACT_STAGE2_IC = '_react_stage2_IC'
 
 DESCRIPTION = f"""
-v{react.__version__} Receptor-Enriched Analysis of Functional Connectivity by Targets.
-All files must be in the same space.
+v{react.__version__} Receptor-Enriched Analysis of Functional Connectivity by
+Targets. All files must be in the same space.
 """
 PROG = 'react'
 EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
@@ -30,7 +30,7 @@ EPILOG = 'REFERENCE: https://doi.org/10.1016/j.neuroimage.2019.04.007 - ' \
 
 def get_parsed_args():
     parser = argparse.ArgumentParser(prog=PROG, epilog=EPILOG,
-        description=DESCRIPTION)
+                                     description=DESCRIPTION)
 
     parser.add_argument(
         'in_fmri',
@@ -58,7 +58,7 @@ def get_parsed_args():
     parser.add_argument(
         'pet_atlas',
         type=str,
-        help='4D file containing the PET atlases '
+        help='3D or 4D file containing the PET atlases '
              'to be used in the REACT analysis. '
              'It is recommended to rescale each PET atlas '
              'between 0 and 1 before running REACT. '
@@ -128,11 +128,11 @@ def main():
     n_times = volume_fmri.shape[-1]
 
     volume_pet = nib.load(fpath_pet)
-    if volume_pet.shape[:-1] != volume_fmri.shape[:-1]:
-        raise ValueError(f'PET volume has shape {volume_pet.shape[:-1]} while '
-                         f'rs-fMRI volume has shape {volume_fmri.shape[:-1]}. '
+    if volume_pet.shape[:3] != volume_fmri.shape[:3]:
+        raise ValueError(f'PET volume has shape {volume_pet.shape[:3]} while '
+                         f'rs-fMRI volume has shape {volume_fmri.shape[:3]}. '
                          f'They must be equal.')
-    n_pet_maps = volume_pet.shape[-1]
+    n_pet_maps = 1 if volume_pet.ndim == 3 else volume_pet.shape[3]
 
     fpath_ic = []
     for i in range(n_pet_maps):
@@ -164,7 +164,10 @@ def main():
     logging.info('Initiating stage 1')
 
     rsfmri = volume4d_to_matrix(volume_fmri.get_fdata())
-    pet = volume4d_to_matrix(volume_pet.get_fdata())
+    pet = volume_pet.get_fdata()
+    if pet.ndim == 3:
+        pet = pet[..., np.newaxis]
+    pet = volume4d_to_matrix(pet)
 
     scaler_y = StandardScaler(with_mean=True, with_std=False)
     y = scaler_y.fit_transform(rsfmri)[mask_stage1, :]
@@ -200,12 +203,12 @@ def main():
     beta2 = np.reshape(beta2, volume_pet.shape)
 
     nib.save(nib.Nifti1Image(beta2, affine=volume_pet.affine),
-        fpath_result_stage2)
+             fpath_result_stage2)
     logging.info(f'Saved result stage 2 in {fpath_result_stage1}')
 
     for i, f in enumerate(fpath_ic):
         nib.save(nib.Nifti1Image(np.squeeze(beta2[..., i]),
-            affine=volume_pet.affine), f)
+                                 affine=volume_pet.affine), f)
         logging.info(f'Saved result IC{i} of stage 2 in {f}')
 
 

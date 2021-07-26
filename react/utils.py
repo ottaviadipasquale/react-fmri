@@ -58,7 +58,7 @@ def check_can_write_file(fpath: str, force: bool = False,
             raise FileNotFoundError(f'Directory does not exist: {d}')
 
 
-def normalize_3d_volume(v: np.ndarray):
+def normalize_3d_volume(v: np.ndarray) -> np.ndarray:
     """
     Normalize the positive values of a 3-dimensional numpy array.
 
@@ -94,7 +94,7 @@ def normalize_3d_volume(v: np.ndarray):
     return data
 
 
-def volume4d_to_matrix(v: np.ndarray):
+def volume4d_to_matrix(v: np.ndarray) -> np.ndarray:
     """
         This function transforms a 4-dimensional volume in a matrix whose
         columns are the vectorization of the 4th dimension of the input array.
