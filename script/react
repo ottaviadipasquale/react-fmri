@@ -207,7 +207,11 @@ def main():
     logging.info(f'Saved result stage 2 in {fpath_result_stage1}')
 
     for i, f in enumerate(fpath_ic):
-        nib.save(nib.Nifti1Image(np.squeeze(beta2[..., i]),
+        if n_pet_maps == 1:
+            img = beta2
+        else:
+            img = beta2[..., i]
+        nib.save(nib.Nifti1Image(np.squeeze(img),
                                  affine=volume_pet.affine), f)
         logging.info(f'Saved result IC{i} of stage 2 in {f}')
 
