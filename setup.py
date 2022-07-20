@@ -14,13 +14,12 @@ with open('react/__init__.py') as f:
             break
 
 # Read the requirements from the file
-requirements = []
-req_path = os.path.join(os.path.dirname(__file__), 'requirements.txt')
-with open(req_path, 'r') as f:
-    for line in f:
-        if line[0] == '#':
-            continue
-        requirements.append(line.rstrip('\n'))
+requirements = [
+    "numpy>=1.15",
+    "scipy>=0.19.1",
+    "nibabel>=3.0.0",
+    "scikit-learn>=0.22"
+]
 
 setup(
     author='Ottavia Dipasquale, Matteo Frigo',
