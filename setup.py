@@ -1,4 +1,5 @@
 from glob import glob
+import os
 
 from setuptools import setup
 
@@ -14,7 +15,8 @@ with open('react/__init__.py') as f:
 
 # Read the requirements from the file
 requirements = []
-with open('requirements.txt', 'r') as f:
+req_path = os.path.join(os.path.dirname(__file__), 'requirements.txt')
+with open(req_path, 'r') as f:
     for line in f:
         if line[0] == '#':
             continue
