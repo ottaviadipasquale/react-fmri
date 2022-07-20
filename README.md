@@ -136,9 +136,9 @@ generate:
     connectivity maps associated to the PET atlases provided as regressors. 
     If the number of PET atlases is higher than 1, the 4D file 
     `subject001_react_stage2.nii.gz` will be split into 3D files, e.g.:
-        - `subject001_react_stage2_IC0.nii.gz`
-        - `subject001_react_stage2_IC1.nii.gz`
-        - `subject001_react_stage2_IC2.nii.gz`
+        - `subject001_react_stage2_map0.nii.gz`
+        - `subject001_react_stage2_map1.nii.gz`
+        - `subject001_react_stage2_map2.nii.gz`
 
 ## Requirements
 * python3

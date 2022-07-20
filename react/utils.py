@@ -6,8 +6,7 @@ import numpy as np
 __all__ = ['check_can_write_file', 'normalize_3d_volume', 'volume4d_to_matrix']
 
 
-def check_can_write_file(fpath: str, force: bool = False,
-                         verbose: bool = False):
+def check_can_write_file(fpath: str, force: bool = False):
     """
     Check if a file can be written.
 
@@ -31,8 +30,7 @@ def check_can_write_file(fpath: str, force: bool = False,
         FileNotFoundError : if file does not exist and the parent directory
             does not exist.
     """
-    if verbose:
-        print(fpath)
+    logging.debug(fpath)
 
     if os.path.exists(fpath) and os.path.isfile(fpath):
         if os.access(fpath, os.W_OK):

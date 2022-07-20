@@ -13,7 +13,7 @@ from react.utils import check_can_write_file, volume4d_to_matrix
 
 OUT_REACT_STAGE1 = '_react_stage1.txt'
 OUT_REACT_STAGE2 = '_react_stage2.nii.gz'
-OUT_REACT_STAGE2_IC = '_react_stage2_IC'
+OUT_REACT_STAGE2_MAP = '_react_stage2_map'
 
 DESCRIPTION = f"""
 v{react.__version__} Receptor-Enriched Analysis of Functional Connectivity by
@@ -72,11 +72,11 @@ def get_parsed_args():
              'The output files will be named as: '
              '`<out_react>_react_stage1.txt`, '
              '`<out_react>_react_stage2.nii.gz` '
-             'and `<out_react>_react_stage2_IC????.nii.gz` .'
+             'and `<out_react>_react_stage2_map????.nii.gz` .'
              'E.g., `/home/study/REACT/subject001` will generate files '
              '`/home/study/REACT/subject001_react_stage1.txt`, '
              '`/home/study/REACT/subject001_react_stage1.txt` and '
-             '`/home/study/REACT/subject001_react_stage2_IC????.nii.gz`'
+             '`/home/study/REACT/subject001_react_stage2_map????.nii.gz`'
     )
 
     parser.add_argument(
@@ -106,9 +106,10 @@ def main():
     args = get_parsed_args()
 
     if args.verbose:
-        logging.getLogger().setLevel(logging.INFO)
-    else:
-        logging.getLogger().setLevel(logging.WARNING)
+        logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
 
     if args.force:
         logging.warning('Overwriting existing files')
@@ -119,10 +120,10 @@ def main():
     fpath_mask_stage2 = args.mask_stage2
 
     fpath_result_stage1 = os.path.abspath(args.out_react) + OUT_REACT_STAGE1
-    check_can_write_file(fpath_result_stage1, args.force, args.verbose)
+    check_can_write_file(fpath_result_stage1, args.force)
 
     fpath_result_stage2 = os.path.abspath(args.out_react) + OUT_REACT_STAGE2
-    check_can_write_file(fpath_result_stage2, args.force, args.verbose)
+    check_can_write_file(fpath_result_stage2, args.force)
 
     volume_fmri = nib.load(fpath_fmri)
     n_times = volume_fmri.shape[-1]
@@ -134,11 +135,11 @@ def main():
                          f'They must be equal.')
     n_pet_maps = 1 if volume_pet.ndim == 3 else volume_pet.shape[3]
 
-    fpath_ic = []
+    fpath_map = []
     for i in range(n_pet_maps):
-        fpath_ic.append(os.path.abspath(
-            args.out_react + OUT_REACT_STAGE2_IC + str(i) + '.nii.gz'))
-        check_can_write_file(fpath_ic[-1], args.force, args.verbose)
+        fpath_map.append(os.path.abspath(
+            args.out_react + OUT_REACT_STAGE2_MAP + str(i + 1) + '.nii.gz'))
+        check_can_write_file(fpath_map[-1], args.force)
 
     mask_stage1 = nib.load(fpath_mask_stage1).get_fdata()
     if mask_stage1.shape != volume_fmri.shape[:-1]:
@@ -206,14 +207,14 @@ def main():
              fpath_result_stage2)
     logging.info(f'Saved result stage 2 in {fpath_result_stage1}')
 
-    for i, f in enumerate(fpath_ic):
+    for i, f in enumerate(fpath_map):
         if n_pet_maps == 1:
             img = beta2
         else:
             img = beta2[..., i]
         nib.save(nib.Nifti1Image(np.squeeze(img),
                                  affine=volume_pet.affine), f)
-        logging.info(f'Saved result IC{i} of stage 2 in {f}')
+        logging.info(f'Saved result map{i + 1} of stage 2 in {f}')
 
 
 if __name__ == '__main__':
