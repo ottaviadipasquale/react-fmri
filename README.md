@@ -205,13 +205,18 @@ https://doi.org/10.1016/j.neuroimage.2019.04.007.
     O. Sabri, S. Hesse, M. Rullmann, L. Lopiano, M. Veronese, D. Martins, M. Bozzali,
     "Cognitive fatigue in multiple sclerosis is associated with alterations in the 
     functional connectivity of monoamine circuits", Brain Communications 2021, 
-    3 (2), fcab023, https://doi.org/10.1093/braincomms/fcab023
+    https://doi.org/10.1093/braincomms/fcab023
     
     * D. Martins, M. Veronese, F.E. Turkheimer, M.A. Howard, S.C.R. Williams, 
     O. Dipasquale, "A candidate neuroimaging biomarker for detection of 
     neurotransmission-related functional alterations and prediction of 
-    pharmacological analgesic response in chronic pain", BioRxiv, 
-    https://doi.org/10.1101/2021.02.17.431572
+    pharmacological analgesic response in chronic pain", Brain Communications 2022, 
+    https://doi.org/10.1093/braincomms/fcab302
+
+    * T. Lawn, M.A. Howard, F. Turkheimer, B. Misic, G. Deco, D. Martins, O.
+    Dipasquale, "From neurotransmitters to networks: Transcending organisational
+    hierarchies with molecular-informed functional imaging", Neuroscience &
+    Biobehavioral Reviews 2023, https://doi.org/10.1016/j.neubiorev.2023.105193
     
 * **Github Repository**: Ottavia Dipasquale and Matteo Frigo, "REACT-fMRI Python 
 package", 2021, https://github.com/ottaviadipasquale/react-fmri/,
